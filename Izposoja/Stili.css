@@ -1,0 +1,143 @@
+﻿
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: first baseline;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 30px;
+}
+form-control {
+    font-style: italic;
+}
+
+p {
+    margin: 10px 20px 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+label {
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+body {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f6f4ea;
+    
+}
+
+img {
+    padding: 10px 2px 2px 2px;
+    vertical-align: middle;
+}
+
+.navbar {
+    background-color: #e6e4d8;
+    font-size: 16px;
+}
+
+
+.img-navabar {
+    border-width: 0px 0px 0px 0px;
+    padding-left: 8px;
+    padding-top: 0px;
+}
+
+.card {
+    padding: 10px;
+    background-color: #ffffff89;
+    border-color: #a4a399;
+    margin: 30px 3px 10px 6px;
+}
+
+.card-default {
+    background-color: #ffffff89;
+    border-color: #a4a399; 
+    margin: 30px 3px 10px 6px;
+    width: 400px;
+}
+
+.div {
+    background-color: #ffffff89;
+}
+
+
+.btn 
+{
+    margin: 15px;
+    border: 1px solid #E6E4D8;
+    padding: 5px;
+    background-color: #FBFAF5;
+    color: #666666;
+    border-radius: 13px 13px;
+    text-align: center;
+    }
+
+    .btn:hover {
+        margin: 15px;
+        border: 1px solid #E6E4D8;
+        padding: 5px;
+        background-color: #f7f6f0;
+        color: #2c2c2c;
+        border-radius: 13px 13px;
+    }
+
+
+
+a.btn.btn-default {
+    background-color: transparent;
+    color: #2c2c2c;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    border: none;
+}
+
+h2
+{
+    margin: 30px 5px 10px 5px;
+}
+
+.validator {
+    border-style: 0;
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+    border-width: 0px;
+}
+
+.btn:active {
+    margin: 15px;
+    border: 1px solid #E6E4D8;
+    padding: 5px;
+    background-color: #FBFAF5;
+    color: #666666;
+    border-radius: 13px 13px;
+}
+.btn-txtbx {
+    border: 1px solid #E6E4D8;
+    padding: 5px;
+    background-color: #FBFAF5;
+    color: #666666;
+    border-radius: 13px 13px;
+    text-align: center;
+    height: 37px;
+    margin-bottom: 15px;
+}
+
+.btn-urejanje {
+    margin: 15px;
+    padding-left: 20em;
+    border: 1px solid #E6E4D8;
+    padding: 5px;
+    background-color: #F6F4EA;
+    color: #482400;
+    border-radius: 13px 13px;
+    text-align: center;
+}
+
