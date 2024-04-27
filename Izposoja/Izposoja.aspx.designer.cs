@@ -105,21 +105,21 @@ namespace Izposoja
         protected global::System.Web.UI.WebControls.Button btnVrni;
 
         /// <summary>
-        /// SqlDataSourceIzposojeneKnjige control.
+        /// SqlDataSourceBorrowedBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceIzposojeneKnjige;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceBorrowedBooks;
 
         /// <summary>
-        /// GridViewIzposojeneKnjige control.
+        /// GridViewBorrowedBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewIzposojeneKnjige;
+        protected global::System.Web.UI.WebControls.GridView GridViewBorrowedBooks;
     }
 }

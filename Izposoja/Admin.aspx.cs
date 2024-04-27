@@ -24,70 +24,69 @@ namespace Izposoja
                 }
                 else
                 {
-                    GridView1.DataBind();   //poveže se z bazo
+                    GridView1.DataBind();   //connects with database
                 }
 
             }
             catch (Exception ex)
             {
-
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
         }
 
-        protected void btnIzbrisiUporabnika_Click(object sender, EventArgs e)
+        protected void btnIzbrisiUporabnika_Click(object sender, EventArgs e)  //btn for deleting user
         {
-            if (UporabnikObstaja())
+            if (UporabnikObstaja())   // user exists
             {
-                IzbrisiUporabnika();
+                IzbrisiUporabnika();  // delete user
                 GridView1.DataBind();
             }
         }
 
 
-        void IzbrisiUporabnika()
+        void IzbrisiUporabnika()        //delete user
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon);  //connection
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("DELETE from Uporabniki WHERE UporIme='" + txtUpIme.Text + "' ", con);
+                SqlCommand cmd = new SqlCommand("DELETE from Users WHERE Username='" + txtUpIme.Text + "' ", con);
 
-                cmd.ExecuteNonQuery();   //izvede
+                cmd.ExecuteNonQuery();   //execution
                 con.Close();
 
-                AdminUrejanjeObvestilo.Text = "Uporabnik " + txtUpIme.Text + " je izbrisan.";
+                AdminUrejanjeObvestilo.Text = "User " + txtUpIme.Text + " is deleted.";
             }
             catch (Exception ex)
             {
                 AdminUrejanjeObvestilo.ForeColor = System.Drawing.Color.Red;
-                AdminUrejanjeObvestilo.Text = "Uporabnika ni mogoče izbrisati. Preveri, če ima aktivne izposoje!";
+                AdminUrejanjeObvestilo.Text = "User cannot be deleted. Check if he returned books.";
             }
         }
 
-        bool UporabnikObstaja()
+        bool UporabnikObstaja()         //user exists
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon);  //connection
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                //preko adapterja napolnemo tabelo s select poizvedbo:
-                SqlCommand cmd = new SqlCommand("SELECT * from Uporabniki where UporIme='" + txtUpIme.Text + "';", con);
+                //fill datatable throug adapter with select command: 
+                SqlCommand cmd = new SqlCommand("SELECT * from Users where Username='" + txtUpIme.Text + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();     //tabela
+                DataTable dt = new DataTable();     
                 da.Fill(dt);
 
-                if (dt.Rows.Count >= 1)  // če vnos obstaja
+                if (dt.Rows.Count >= 1)  // if entry already exists
                 {
                     return true;
                 }
@@ -103,24 +102,24 @@ namespace Izposoja
             }
         }
 
-        protected void btnDodajUporabnika_Click(object sender, EventArgs e)
+        protected void btnDodajUporabnika_Click(object sender, EventArgs e)     // btn Add user
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon);  //connection
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Uporabniki (UporIme,Ime,Priimek,eNaslov,Geslo) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO Users (Username,Name,Surname,email,PAssword) " +
                 "VALUES ('" + txtUpIme.Text + "', '" + txtIme.Text + "', '" + txtPriimek.Text + "', '" + txtEnaslov.Text + "', '" + txtGeslo.Text + "' )", con);
 
-                cmd.ExecuteNonQuery();   //izvede
+                cmd.ExecuteNonQuery();   //execution
                 con.Close();
 
-                AdminUrejanjeObvestilo.Text = " <br/> Uspešno dodan uporabnik " + txtUpIme.Text + "!";
+                AdminUrejanjeObvestilo.Text = " <br/> User " + txtUpIme.Text + "successfully added!";
                 Page_Load(sender, e);
             }
             catch (Exception ex)

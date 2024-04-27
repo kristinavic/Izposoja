@@ -27,7 +27,7 @@ namespace Izposoja
                 }
                 else
                 {
-                    GridViewKnjige.DataBind();
+                    GridViewBooks.DataBind();
                 }
 
             }
@@ -38,33 +38,33 @@ namespace Izposoja
             }
         }
 
-        protected void btnDodaj_Click(object sender, EventArgs e)
+        protected void btnDodaj_Click(object sender, EventArgs e)    // btn add
         {
             if (KnjigaObstaja())
             {
                 DodajKnjigoObvestilo.ForeColor = System.Drawing.Color.Red;
-                DodajKnjigoObvestilo.Text = "Knjiga že obstaja.";
+                DodajKnjigoObvestilo.Text = "Book already exists.";
             }
             else
                 DodajNovoKnjigo();
         }
 
-        protected void btnSpremeni_Click(object sender, EventArgs e)
+        protected void btnSpremeni_Click(object sender, EventArgs e)  // btn change
         {
             spremeniKnjigo();
         }
 
-        protected void btnBrisi_Click(object sender, EventArgs e)
+        protected void btnBrisi_Click(object sender, EventArgs e)      //btn delete
         {
-            izbrisiKnjigo();
+            izbrisiKnjigo();  
         }
 
-        protected void btnNajdiKnjigo_Click(object sender, EventArgs e)
+        protected void btnNajdiKnjigo_Click(object sender, EventArgs e)   // btn find book
         {
             isciIDKnjige();
         }
 
-        void izbrisiKnjigo()
+        void izbrisiKnjigo()        //delete book
         {
             if (KnjigaObstaja())
             {
@@ -76,14 +76,14 @@ namespace Izposoja
                         con.Open();
                     }
 
-                    SqlCommand cmd = new SqlCommand("DELETE from Knjige WHERE KnjigaID='" + txtIDKnjige.Text + "'", con);
+                    SqlCommand cmd = new SqlCommand("DELETE from Books WHERE BookID='" + txtIDKnjige.Text + "'", con);
 
                     cmd.ExecuteNonQuery();
                     con.Close();
 
-                    DodajKnjigoObvestilo.Text = "Knjiga izbrisana!";
+                    DodajKnjigoObvestilo.Text = "Book deleted!";
 
-                    GridViewKnjige.DataBind();
+                    GridViewBooks.DataBind();
 
                 }
                 catch (Exception ex)
@@ -103,7 +103,7 @@ namespace Izposoja
             {
                 try
                 {
-                    //preverimo izbrane zvrsti
+                    //check selected genres
                     string zvrst = "";
 
                     foreach (int i in ListBoxZvrst.GetSelectedIndices())
@@ -113,11 +113,11 @@ namespace Izposoja
                     zvrst = zvrst.Remove(zvrst.Length - 1);
 
 
-                    //v spremenljivko shranimo pot do knjige
+                    //picture filepath saved in variable 
                     string filepath = "~/bookcovers";
                     string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
 
-                    if (filename == "" || filename == null)  //če ne spreminjamo slike
+                    if (filename == "" || filename == null)  //if we don't change picture
                     {
                         filepath = img_filepath;
 
@@ -125,11 +125,11 @@ namespace Izposoja
                     else
                     {
                         FileUpload1.SaveAs(Server.MapPath("bookcovers/" + filename));
-                        filepath = "~/bookcovers/" + filename;     //novo ime nove slike
+                        filepath = "~/bookcovers/" + filename;     //new picture name
                     }
 
 
-                    //povezava z bazo
+                    //connection with database
                     SqlConnection con = new SqlConnection(strdbcon);
 
                     if (con.State == ConnectionState.Closed)
@@ -137,22 +137,22 @@ namespace Izposoja
                         con.Open();
                     }
 
-                    SqlCommand cmd = new SqlCommand("UPDATE Knjige SET Naslov=@Naslov,  Avtor=@Avtor, LetoIzdaje=@LetoIzdaje, Zvrst=@Zvrst, Lastnik=@Lastnik, Opis=@Opis, Slika=@Slika WHERE KnjigaID='"+txtIDKnjige.Text+"'   ", con);
-                    cmd.Parameters.AddWithValue("@Naslov", txtNaslov.Text);
-                    cmd.Parameters.AddWithValue("@Avtor", txtAvtor.Text);
-                    cmd.Parameters.AddWithValue("@LetoIzdaje", txtLeto.Text.ToString());
-                    cmd.Parameters.AddWithValue("@Zvrst", zvrst);
-                    cmd.Parameters.AddWithValue("@Lastnik", txtLastnik.Text);
-                    cmd.Parameters.AddWithValue("@Opis", txtOpis.Text);
-                    cmd.Parameters.AddWithValue("@Slika", filepath);
+                    SqlCommand cmd = new SqlCommand("UPDATE Books SET Title=@Title,  Author=@Author, PublicationYear=@PublicationYear, Genre=@Genre, Owner=@Owner, Description=@Description, Picture=@Picture WHERE BookID='" + txtIDKnjige.Text+"'   ", con);
+                    cmd.Parameters.AddWithValue("@Title", txtNaslov.Text);
+                    cmd.Parameters.AddWithValue("@Author", txtAvtor.Text);
+                    cmd.Parameters.AddWithValue("@PublicationYear", txtLeto.Text.ToString());
+                    cmd.Parameters.AddWithValue("@Genre", zvrst);
+                    cmd.Parameters.AddWithValue("@Owner", txtLastnik.Text);
+                    cmd.Parameters.AddWithValue("@Description", txtOpis.Text);
+                    cmd.Parameters.AddWithValue("@Picture", filepath);
 
 
                     cmd.ExecuteNonQuery();
                     con.Close();
 
-                    DodajKnjigoObvestilo.Text = "Podatki o knjigi spremenjeni!";
+                    DodajKnjigoObvestilo.Text = "Book data are now changed!";
                     txtIDKnjige.Text = txtNaslov.Text = txtAvtor.Text = txtLeto.Text = txtLastnik.Text = txtOpis.Text = string.Empty;
-                    GridViewKnjige.DataBind();
+                    GridViewBooks.DataBind();
 
 
                 }
@@ -164,42 +164,43 @@ namespace Izposoja
             else
             {
                 DodajKnjigoObvestilo.ForeColor = System.Drawing.Color.Red;
-                DodajKnjigoObvestilo.Text = "Napačni podatki!";
+                DodajKnjigoObvestilo.Text = "Wrong entry!";
             }
         }
         void isciIDKnjige()
         {
             try
             {
+                
                 SqlConnection con = new SqlConnection(strdbcon);
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * from Knjige WHERE KnjigaID='" + txtIDKnjige.Text + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from Books WHERE BookID='" + txtIDKnjige.Text + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
                 if (dt.Rows.Count >= 1)
                 {
-                    txtLastnik.Text = dt.Rows[0]["Lastnik"].ToString(); //vrstica 0 in stolpec z imenom
-                    txtNaslov.Text = dt.Rows[0]["Naslov"].ToString();
-                    txtAvtor.Text = dt.Rows[0]["Avtor"].ToString();
-                    txtLeto.Text = dt.Rows[0]["LetoIzdaje"].ToString();
-                    txtOpis.Text = dt.Rows[0]["Opis"].ToString();
+                    txtLastnik.Text = dt.Rows[0]["Owner"].ToString(); //row 0 and column with name
+                    txtNaslov.Text = dt.Rows[0]["Title"].ToString();
+                    txtAvtor.Text = dt.Rows[0]["Author"].ToString();
+                    txtLeto.Text = dt.Rows[0]["PublicationYear"].ToString();
+                    txtOpis.Text = dt.Rows[0]["Description"].ToString();
 
 
-                    //listbox - zvrst
+                    //listbox - genre
                     ListBoxZvrst.ClearSelection();
 
-                    string[] zvrst = dt.Rows[0]["Zvrst"].ToString().Split(','); //kjer je , razbije string
+                    string[] zvrst = dt.Rows[0]["Genre"].ToString().Split(','); //where it is, it breaks string
 
-                    for (int i = 0; i < zvrst.Length; i++) //izvede se tolikokrat, kot je naštetih zvrsti pri knjigi
+                    for (int i = 0; i < zvrst.Length; i++) //executes as many times as there are genres at the book
                     {
-                        for (int j = 0; j < ListBoxZvrst.Items.Count; j++) //preveri vse elemente listboxa
+                        for (int j = 0; j < ListBoxZvrst.Items.Count; j++) //checks every element of listbox
                         {
-                            if (ListBoxZvrst.Items[j].ToString() == zvrst[i]) // če se ujemata, ga izbere
+                            if (ListBoxZvrst.Items[j].ToString() == zvrst[i]) // if matching, it selects it
                             {
                                 ListBoxZvrst.Items[j].Selected = true;
                             }
@@ -207,12 +208,12 @@ namespace Izposoja
                     }
 
                     //link za sliko
-                    img_filepath = dt.Rows[0]["Slika"].ToString();
+                    img_filepath = dt.Rows[0]["Picture"].ToString();
                 }
                 else
                 {
                     DodajKnjigoObvestilo.ForeColor = System.Drawing.Color.Red;
-                    DodajKnjigoObvestilo.Text = "Knjige ne najdem.";
+                    DodajKnjigoObvestilo.Text = "Can't find the book.";
                 }
 
             }
@@ -223,24 +224,24 @@ namespace Izposoja
 
         }
 
-        bool KnjigaObstaja()
+        bool KnjigaObstaja()   // book exists
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon);  //connection
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                //preko adapterja napolnemo tabelo s select poizvedbo:
-                SqlCommand cmd = new SqlCommand("SELECT * from Knjige where KnjigaID='" + txtIDKnjige.Text + "' OR Naslov='" + txtNaslov.Text + "' ;", con);
+                //through adapter you fill datatable with select query: 
+                SqlCommand cmd = new SqlCommand("SELECT * from Books where BookID='" + txtIDKnjige.Text + "' OR Title='" + txtNaslov.Text + "' ;", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();     //tabela
+                DataTable dt = new DataTable();     
                 da.Fill(dt);
 
-                if (dt.Rows.Count >= 1)  // če knjiga obstaja
+                if (dt.Rows.Count >= 1)  //if book exists
                 {
                     return true;
                 }
@@ -256,28 +257,28 @@ namespace Izposoja
             }
         }
 
-        void DodajNovoKnjigo()
+        void DodajNovoKnjigo()          // add new book
         {
             try
             {
                 string zvrst = "";
 
-                //za izbor več zvrsti naenkrat
+                //select multiple genres
                 foreach (int i in ListBoxZvrst.GetSelectedIndices() )
                 {
-                    zvrst = zvrst + ListBoxZvrst.Items[i] + ",";  // zvrst + izbrana zvrst na i-ti poziciji
+                    zvrst = zvrst + ListBoxZvrst.Items[i] + ",";  // genre and selected genre at [i] position
                 }
-                zvrst = zvrst.Remove(zvrst.Length - 1);  //pobrišem vejico
+                zvrst = zvrst.Remove(zvrst.Length - 1);  //deletes comma (,)
 
 
                 //fileupload
                 string filepath = "~/bookcovers/";
-                string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);  // v filename se shrani ime slike (FileName), naložena preko FileUpload1 v .aspx
-                FileUpload1.SaveAs(Server.MapPath("bookcovers/" + filename));   //pot do izbrane slike
-                filepath = "~/bookcovers/" + filename;  // mapa + preostanek imena 
+                string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);  // through FileUpload1 in .aspx the name of the picture (FileName) gets saved in 'filename' 
+                FileUpload1.SaveAs(Server.MapPath("bookcovers/" + filename));   //path to the saved picture
+                filepath = "~/bookcovers/" + filename;  // location + the rest of the name 
 
 
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon);  
 
                 if (con.State == ConnectionState.Closed)
                 {
@@ -285,14 +286,14 @@ namespace Izposoja
                 }
 
                 //preko adapterja napolnemo tabelo s select poizvedbo:
-                SqlCommand cmd = new SqlCommand("INSERT INTO Knjige (KnjigaID,Naslov,Avtor,LetoIzdaje,Zvrst,Lastnik,Opis,Slika) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO Books (BookID,Title,Author,PublicationYear,Genre,Owner,Description,Picture) " +
                     "VALUES ('" + txtIDKnjige.Text+ "', '" + txtNaslov.Text + "', '"+ txtAvtor.Text + "', '"+ txtLeto.Text.ToString() + "','"+ zvrst + "', '"+ txtLastnik.Text + "', '"+ txtOpis.Text + "',  '"+ filepath + "') ", con);
                 
                 cmd.ExecuteNonQuery();
                 con.Close();
-                DodajKnjigoObvestilo.Text = "Knjiga dodana!";
+                DodajKnjigoObvestilo.Text = "Book added!";
                 txtIDKnjige.Text = txtNaslov.Text = txtAvtor.Text = txtLeto.Text = txtLastnik.Text = txtOpis.Text = string.Empty;
-                GridViewKnjige.DataBind();
+                GridViewBooks.DataBind();
 
             }
             catch (Exception ex)

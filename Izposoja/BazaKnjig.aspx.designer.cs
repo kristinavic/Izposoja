@@ -15,21 +15,21 @@ namespace Izposoja
     {
 
         /// <summary>
-        /// SqlDataSourceKnjige control.
+        /// SqlDataSourceBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceKnjige;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSourceBooks;
 
         /// <summary>
-        /// GridViewKnjige control.
+        /// GridViewBooks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewKnjige;
+        protected global::System.Web.UI.WebControls.GridView GridViewBooks;
     }
 }

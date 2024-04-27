@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Registracija uporabnika" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registracija.aspx.cs" Inherits="Izposoja.Registracija" %>
+﻿<%@ Page Title="User registration" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Registracija.aspx.cs" Inherits="Izposoja.Registracija" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="Stili.css" rel="stylesheet" type="text/css" />
     
@@ -21,7 +21,7 @@
                             <div class="col">
                                 <center>
                                     <h2 id="title"><%: Title %></h2>
-                                    <label>Prosim izpolni obrazec. Vsa polja so obvezna.</label>
+                                    <label>Please fill the form, all fields are mandatory.</label>
                                 </center>
                             </div>
                         </div>
@@ -36,30 +36,30 @@
                                     <asp:Label ID="registracijaObvestilo" runat="server" Font-Size="Medium" ForeColor="Green"></asp:Label> 
                                 </div>
 
-                                <label>Uporabniško ime:</label> <asp:RequiredFieldValidator ID="rfvUpIme" runat="server" CssClass="validator" ControlToValidate="txtUpIme" ErrorMessage="Obvezno polje" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <label>Username:</label> <asp:RequiredFieldValidator ID="rfvUpIme" runat="server" CssClass="validator" ControlToValidate="txtUpIme" ErrorMessage="Mandatory field" ForeColor="Red"></asp:RequiredFieldValidator>
                                      <div class="form-group">
-                                        <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Uporabniško ime"></asp:TextBox>
+                                        <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Username"></asp:TextBox>
                                      </div>
 
-                                <label>Ime:</label> <asp:RequiredFieldValidator ID="rfvIme" runat="server" CssClass="validator" ControlToValidate="txtIme" ErrorMessage="Ovezno polje" ForeColor="Red"></asp:RequiredFieldValidator><br />
+                                <label>Name:</label> <asp:RequiredFieldValidator ID="rfvIme" runat="server" CssClass="validator" ControlToValidate="txtIme" ErrorMessage="Mandatory field" ForeColor="Red"></asp:RequiredFieldValidator><br />
                                     <div class="form-group">
-                                        <asp:TextBox ID="txtIme" runat="server" CssClass="form-control txtbox" placeholder="Ime"></asp:TextBox>
+                                        <asp:TextBox ID="txtIme" runat="server" CssClass="form-control txtbox" placeholder=Name></asp:TextBox>
                                     </div>
 
-                                <label>Priimek:</label> <asp:RequiredFieldValidator ID="rfvPriimek" runat="server" CssClass="validator" ControlToValidate="txtPriimek" ErrorMessage="Obvezno polje" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <label>Surname:</label> <asp:RequiredFieldValidator ID="rfvPriimek" runat="server" CssClass="validator" ControlToValidate="txtPriimek" ErrorMessage="Mandatory field" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <div class="form-group">
-                                        <asp:TextBox ID="txtPriimek" runat="server" CssClass="form-control txtbox" placeholder="Priimek"></asp:TextBox>
+                                        <asp:TextBox ID="txtPriimek" runat="server" CssClass="form-control txtbox" placeholder="Surname"></asp:TextBox>
                                     </div>
 
-                                <label>Elektronski naslov:</label><asp:RequiredFieldValidator ID="rfvEnaslov" runat="server" CssClass="validator" ControlToValidate="txtEnaslov" ErrorMessage="Obvezno polje" ForeColor="Red"></asp:RequiredFieldValidator>
-                                        <asp:RegularExpressionValidator ID="revEnaslov" runat="server" CssClass="validator"  ControlToValidate="txtEnaslov" ErrorMessage="Nepravilen e-naslov." ForeColor="Red" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
+                                <label>E-mail address:</label><asp:RequiredFieldValidator ID="rfvEnaslov" runat="server" CssClass="validator" ControlToValidate="txtEnaslov" ErrorMessage="Mandatory field" ForeColor="Red"></asp:RequiredFieldValidator>
+                                        <asp:RegularExpressionValidator ID="revEnaslov" runat="server" CssClass="validator"  ControlToValidate="txtEnaslov" ErrorMessage="Wrong e-mail." ForeColor="Red" ValidationExpression="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"></asp:RegularExpressionValidator>
                                   <div class="form-group">
-                                        <asp:TextBox ID="txtEnaslov" runat="server" CssClass="form-control txtbox" placeholder="Elektronski naslov"></asp:TextBox>
+                                        <asp:TextBox ID="txtEnaslov" runat="server" CssClass="form-control txtbox" placeholder="E-mail"></asp:TextBox>
                                         </div>
 
-                                <label>Geslo:</label> <asp:RequiredFieldValidator ID="rfvGeslo" runat="server" CssClass="validator" ControlToValidate="txtGeslo" ErrorMessage="Obvezen vnos gesla" ForeColor="Red"></asp:RequiredFieldValidator>
+                                <label>Password:</label> <asp:RequiredFieldValidator ID="rfvGeslo" runat="server" CssClass="validator" ControlToValidate="txtGeslo" ErrorMessage="Password entry is mandatory" ForeColor="Red"></asp:RequiredFieldValidator>
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtGeslo" runat="server" CssClass="form-control txtbox" TextMode="Password" placeholder="Geslo"></asp:TextBox>
+                                    <asp:TextBox ID="txtGeslo" runat="server" CssClass="form-control txtbox" TextMode="Password" placeholder="Password"></asp:TextBox>
                                  </div>
 
                                 <div class="form-group">

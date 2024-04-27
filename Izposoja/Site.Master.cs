@@ -14,10 +14,10 @@ namespace Izposoja
         {
             try
             {
-                if (Session["dostop"] != null)
+                if (Session["access"] != null)
                 {
                     
-                    if (Session["dostop"].Equals("admin"))  //pogled za admina
+                    if (Session["access"].Equals("admin"))  //admin view
                     {
                         LinkButtonIzposoja.Visible = true;
                         LinkButtonPrijava.Visible = false;
@@ -30,7 +30,7 @@ namespace Izposoja
 
                     }
                     else 
-                    if (Session["dostop"].Equals("user"))   //pogled za prijavljenega uporabnika
+                    if (Session["access"].Equals("user"))   //view for loged in user
                     {
                         LinkButtonIzposoja.Visible = true;
                         LinkButtonPrijava.Visible = false;
@@ -41,7 +41,7 @@ namespace Izposoja
                         LinkButtonMojprofil.Visible = true;                        
                         LinkButtonOdjava.Visible = true;
                     }
-                    else      //pogled za neprijavljenega uporabnika
+                    else      //view for visitors
                     {
                         LinkButtonIzposoja.Visible = false;
                         LinkButtonPrijava.Visible = true;
@@ -63,13 +63,13 @@ namespace Izposoja
            
 
 
-        protected void LinkButtonMojprofil_Click(object sender, EventArgs e)
+        protected void LinkButtonMojprofil_Click(object sender, EventArgs e)  //btn My Profile
         {
             Response.Redirect("Mojprofil.aspx");
         }
 
 
-        protected void LinkButtonOdjava_Click1(object sender, EventArgs e)
+        protected void LinkButtonOdjava_Click1(object sender, EventArgs e)  // btn Log out
         {
             Session["username"] = Session["dostop"] = String.Empty;
             Session.Abandon();

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Prijava uporabnika" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Prijava.aspx.cs" Inherits="IzposojaKnjig.Prijava" %>
+﻿<%@ Page Title="User login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Prijava.aspx.cs" Inherits="IzposojaKnjig.Prijava" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="Stili.css" rel="stylesheet" type="text/css" />
     
@@ -36,14 +36,14 @@
 
                                 </div>
                               
-                                <label>Uporabniško ime:</label> 
+                                <label>Username:</label> 
                                     <div class="form-group">
-                                    <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Uporabniško ime"></asp:TextBox>
+                                    <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Username"></asp:TextBox>
                                 </div>
                             
-                                <label>Geslo:</label> 
+                                <label>Password:</label> 
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtGesloPrijava" runat="server" CssClass="form-control txtbox" TextMode="Password" placeholder="Geslo"></asp:TextBox>
+                                    <asp:TextBox ID="txtGesloPrijava" runat="server" CssClass="form-control txtbox" TextMode="Password" placeholder="Password"></asp:TextBox>
                                 </div>
 
                                 <div class="form-group">
