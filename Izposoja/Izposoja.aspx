@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Izposoja" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Izposoja.aspx.cs" Inherits="Izposoja._Izposoja" %>
+﻿<%@ Page Title="Borrow book" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Izposoja.aspx.cs" Inherits="Izposoja._Izposoja" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
             $(document).ready(function () {
@@ -15,7 +15,7 @@
        <div class="container-fluid">
         <div class="row">
 
-        <%-- Izposoja --%>
+        <%-- Borrow book --%>
             <div class="col-md-4">
                 <div class="card">
                   <div class="card-body">
@@ -28,7 +28,7 @@
 
                   <div class="row">
                      <div class="col">
-                     <center> <h3>Izposoja</h3> </center>
+                     <center> <h3>Borrow book</h3> </center>
                      </div>
                   </div>
 
@@ -44,18 +44,18 @@
                       </div>
                       
                     <div class="col-md-6">
-                        <label>ID uporabnika</label>
+                        <label>Username</label>
                         <div class="form-group">
-                           <asp:TextBox CssClass="form-control txtbox" ID="txtUporIme" runat="server" placeholder="Uporabnik"></asp:TextBox>
+                           <asp:TextBox CssClass="form-control txtbox" ID="txtUporIme" runat="server" placeholder="Username"></asp:TextBox>
                         </div>
                      </div>
 
                    <div class="col-md-6">
-                          <label>ID knjige</label>
+                          <label>Book ID</label>
                         <div class="form-group">
                             <div class="input-group">
-                           <asp:TextBox CssClass="form-control txtbox" ID="txtKnjigaID" runat="server" placeholder="ID knjige"></asp:TextBox>
-                            <asp:Button ID="btnIDKnjige" CssClass="btn-txtbx" runat="server" Text="Najdi" OnClick="btnIDKnjige_Click" />
+                           <asp:TextBox CssClass="form-control txtbox" ID="txtKnjigaID" runat="server" placeholder="Book ID"></asp:TextBox>
+                            <asp:Button ID="btnIDKnjige" CssClass="btn-txtbx" runat="server" Text="Find" OnClick="btnIDKnjige_Click" />
                              </div>
                         </div>
                       </div>
@@ -63,33 +63,33 @@
  
                   <div class="row">
                      <div class="col-md-12">
-                        <label>Naslov knjige</label>
+                        <label>Book title</label>
                         <div class="form-group">
-                           <asp:TextBox CssClass="form-control txtbox" ID="txtNaslov" runat="server" placeholder="Naslov knjige"></asp:TextBox>
+                           <asp:TextBox CssClass="form-control txtbox" ID="txtNaslov" runat="server" placeholder="Book title"></asp:TextBox>
                         </div>
                        </div>
                       </div>
 
                      <div class="row">
                        <div class="col-md-6">
-                           <label>Ime</label>
+                           <label>Name</label>
                             <div class="form-group">
-                               <asp:TextBox CssClass="form-control txtbox" ID="txtIme" runat="server" placeholder="Ime" ></asp:TextBox>
+                               <asp:TextBox CssClass="form-control txtbox" ID="txtIme" runat="server" placeholder="Name" ></asp:TextBox>
                             </div>
                         </div>
                          <div class="col-md-6">
-                           <label>Priimek</label>
+                           <label>Surnam</label>
                             <div class="form-group">
-                               <asp:TextBox CssClass="form-control txtbox" ID="txtPriimek" runat="server" placeholder="Priimek" ></asp:TextBox>
+                               <asp:TextBox CssClass="form-control txtbox" ID="txtPriimek" runat="server" placeholder="Surname" ></asp:TextBox>
                             </div>
                         </div>
                     </div>
 
                      <div class="row">
                         <div class="col-md-6">
-                            <label>Datum izposoje</label>
+                            <label>Date of chekout</label>
                             <div class="form-group">
-                                <asp:TextBox CssClass="form-control txtbox" ID="txtDatumPosoje" runat="server" placeholder="Datum" TextMode="Date" ></asp:TextBox>
+                                <asp:TextBox CssClass="form-control txtbox" ID="txtDatumPosoje" runat="server" placeholder="Date" TextMode="Date" ></asp:TextBox>
                             </div>
                         </div>
                           <div class="col-md-6">
@@ -99,7 +99,7 @@
 
                    <div class="row">
                      <div class="col-md-12">
-                        <br /><center><asp:Button ID="btnVrni" class="btn btn-lg  btn-brisi" runat="server" Text="Vrni knjigo" OnClick="btnVrni_Click" CssClass="btn-urejanje" width="250px"/></center>
+                        <br /><center><asp:Button ID="btnVrni" class="btn btn-lg  btn-brisi" runat="server" Text="Return book" OnClick="btnVrni_Click" CssClass="btn-urejanje" width="250px"/></center>
                      </div>
                    </div>
                 </div>
@@ -107,7 +107,7 @@
                  </div>
            </div>
 
-        <%-- Seznam --%>
+        <%-- List --%>
           <div class="col-md-8">
               <div class="card">
                 <div class="card-body">
@@ -117,7 +117,7 @@
                     
                     <div class="row">
                         <div class="col">
-                        <center> <h3>Seznam izposojenih knjig</h3> </center>
+                        <center> <h3>List of currently borrowed books</h3> </center>
                         </div>
                     </div>
                                 
@@ -126,16 +126,16 @@
                     </div> 
 
                     <div class="row">
-                        <asp:SqlDataSource ID="SqlDataSourceIzposojeneKnjige" ConnectionString="<%$ ConnectionStrings:dbcon %>"  runat="server" SelectCommand="SELECT * FROM EvidencaPosoje" ></asp:SqlDataSource>
+                        <asp:SqlDataSource ID="SqlDataSourceBorrowedBooks" ConnectionString="<%$ ConnectionStrings:dbcon %>"  runat="server" SelectCommand="SELECT * FROM Checkout" ></asp:SqlDataSource>
                       <div class="col">
-                          <asp:GridView class="table table-striped table-bordered" ID="GridViewIzposojeneKnjige" runat="server" DataSourceID="SqlDataSourceIzposojeneKnjige" AutoGenerateColumns="False" CssClass="table">
+                          <asp:GridView class="table table-striped table-bordered" ID="GridViewBorrowedBooks" runat="server" DataSourceID="SqlDataSourceBorrowedBooks" AutoGenerateColumns="False" CssClass="table">
                               <Columns>
-								<asp:BoundField DataField="KnjigaID" HeaderText="ID knjige" SortExpression="KnjigaID"></asp:BoundField>
-								<asp:BoundField DataField="Naslov" HeaderText="Naslov" SortExpression="Naslov"></asp:BoundField>
-								<asp:BoundField DataField="UporIme" HeaderText="Trenutno pri" SortExpression="UporIme"></asp:BoundField>
-                                  <asp:BoundField DataField="Ime" HeaderText="Ime" SortExpression="Ime"></asp:BoundField>
-                                  <asp:BoundField DataField="Priimek" HeaderText="Priimek" SortExpression="Priimek"></asp:BoundField>
-                                  <asp:BoundField DataField="DatumIzposoje" HeaderText="Datum Izposoje" SortExpression="DatumIzposoje"></asp:BoundField>
+								<asp:BoundField DataField="BookID" HeaderText="Book ID" SortExpression="BookID"></asp:BoundField>
+								<asp:BoundField DataField="Title" HeaderText="Title" SortExpression="Title"></asp:BoundField>
+								<asp:BoundField DataField="Username" HeaderText="Currently at" SortExpression="Username"></asp:BoundField>
+                                  <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
+                                  <asp:BoundField DataField="Surname" HeaderText="Surname" SortExpression="Surname"></asp:BoundField>
+                                  <asp:BoundField DataField="Checkout" HeaderText="Checkout date" SortExpression="Checkout"></asp:BoundField>
                               </Columns>
                         </asp:GridView>
                      </div>

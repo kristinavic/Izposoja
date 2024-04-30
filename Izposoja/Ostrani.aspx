@@ -1,4 +1,4 @@
-﻿<%@ Page Title="O strani" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Ostrani.aspx.cs" Inherits="IzposojaKnjig.About" %>
+﻿<%@ Page Title="About" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Ostrani.aspx.cs" Inherits="IzposojaKnjig.About" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="Stili.css" rel="stylesheet" type="text/css" />
     
@@ -32,14 +32,14 @@
 
                        <div class="row">
                          <div class="col">
-                              <p>Stran je zamišljena kot manjše omrežje prijateljev in znancev, ki radi berejo. Priporočila, ocene in izposoja tako poteka med znanimi ljudmi, ki jim zaupaš.</p>
-                              <p>Za pridružitev obstoječi knjižnjici prijateljev je potrebna prijava, zaželeno je, da imaš v svoji lasti nekaj knjig. Razen nakupa lastnih knjig, s pridružitvijo nimaš dodatnih stroškov.<p>
+                              <p>Page is intented to connect small group of friends and aquintances who love to read. Recommendations, reviews and book exchange made through people you know and trust.</p>
+                              <p>To join existing library network of friends you need to login, it's also preferrable that you own some books. By joining this network you do not have additional costs, the only cost you will have is when you buy a book for yourself.<p>
                             </div>
                         </div>
 
                     <div class="row">
                             <div class="col">
-                                <p><a class="btn btn-default" href="Default.aspx">&laquo Nazaj</a></p>
+                                <p><a class="btn btn-default" href="Default.aspx">&laquo Back</a></p>
                             </div>
                         </div>
                 </div>

@@ -11,6 +11,7 @@ using System.Configuration;
 
 namespace Izposoja
 {
+    //registration page
     public partial class Registracija : System.Web.UI.Page
     {
         string strdbcon = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
@@ -21,35 +22,35 @@ namespace Izposoja
 
         protected void btnRegistracija_Click(object sender, EventArgs e)
         {
-            if(UporabnikObstaja())
+            if(UporabnikObstaja())  //user exists
             {
-                registracijaObvestilo.Text = "Uporabnik s tem e-naslovom že obstaja.";
+                registracijaObvestilo.Text = "User with this e-mail address already exists.";
                 registracijaObvestilo.ForeColor = System.Drawing.Color.Red;
             }
             else
-                vpisiNovegaUporabnika();
+                vpisiNovegaUporabnika();  // register new user
         }
 
-        void vpisiNovegaUporabnika()
+        void vpisiNovegaUporabnika()  // register new user
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon); 
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO [dbo].[Uporabniki] ([UporIme],[Ime],[Priimek],[eNaslov],[Geslo]) " +
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO [dbo].[Users] ([Username],[Name],[Surname],[email],[Password]) " +
                 "VALUES ('" + txtUpIme.Text + "', '" + txtIme.Text + "', '" + txtPriimek.Text + "', '" + txtEnaslov.Text + "', '" + txtGeslo.Text + "' )", con);
 
-                cmd.ExecuteNonQuery();   //izvede
+                cmd.ExecuteNonQuery();
                 con.Close();
 
                 registracijaObvestilo.ForeColor = System.Drawing.Color.Green;
-                registracijaObvestilo.Text = "Čestitam " + txtIme.Text + "!";
-                registracijaObvestilo.Text = registracijaObvestilo.Text + " <br/> Uspešno si se registriral/-a kot " + txtUpIme.Text + "!";
+                registracijaObvestilo.Text = "Congratulations " + txtIme.Text + "!";
+                registracijaObvestilo.Text = registracijaObvestilo.Text + " <br/> You have successfully registered as " + txtUpIme.Text + "!";
 
                 txtUpIme.Text = txtIme.Text = txtPriimek.Text = txtEnaslov.Text = "";
 
@@ -60,30 +61,30 @@ namespace Izposoja
             }
         }
 
-        bool UporabnikObstaja()
+        bool UporabnikObstaja()  // user exists
         {
             try
             {
-                SqlConnection con = new SqlConnection(strdbcon);  //povezava
+                SqlConnection con = new SqlConnection(strdbcon); 
 
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
                 }
 
-                //preko adapterja napolnemo tabelo s select poizvedbo:
-                SqlCommand cmd = new SqlCommand("SELECT * from Uporabniki where eNaslov='" + txtEnaslov.Text + "';", con);
+                //through adapter we fill datable with select query: 
+                SqlCommand cmd = new SqlCommand("SELECT * from Users where email='" + txtEnaslov.Text + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);  
-                DataTable dt = new DataTable();     //tabela
+                DataTable dt = new DataTable();    
                 da.Fill(dt);
 
-                if (dt.Rows.Count >=1)  // če vnos obstaja
+                if (dt.Rows.Count >=1)  // if entry exists
                 {
                    return true;
                 }
                 else
                 {
-                    registracijaObvestilo.Text = "Uporabnik že obstaja!";
+                    registracijaObvestilo.Text = "User already exists!";
                     return false;
                 }
 

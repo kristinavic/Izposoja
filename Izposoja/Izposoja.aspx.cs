@@ -24,7 +24,7 @@ namespace Izposoja
                 }
                 else
                 {
-                    GridViewIzposojeneKnjige.DataBind();
+                    GridViewBorrowedBooks.DataBind();
                 }
 
             }
@@ -40,23 +40,23 @@ namespace Izposoja
             pridobiPodatke();
         }
 
-        protected void btnIzposodi_Click(object sender, EventArgs e)
+        protected void btnIzposodi_Click(object sender, EventArgs e)    //checkout
         {
-            if (knjigaObstaja() && ClanObstaja())
+            if (knjigaObstaja() && ClanObstaja())        
             {
                 if (izposojaObstaja())
                 {
-                    IzposojaObvestilo.Text = "Uporabnik že ima to knjigo.";
+                    IzposojaObvestilo.Text = "User already has this book.";
                 }
                 else
                  izdajaKnjige();
             }
             else
-                IzposojaObvestilo.Text = "Napačni podatki!";
+                IzposojaObvestilo.Text = "Wrong data!";
 
         }
 
-        protected void btnVrni_Click(object sender, EventArgs e)
+        protected void btnVrni_Click(object sender, EventArgs e) //return
         {
             if (knjigaObstaja() && ClanObstaja())
             {
@@ -65,15 +65,15 @@ namespace Izposoja
                     vrniKnjigo();
                 }
                 else
-                    IzposojaObvestilo.Text = "Ni vnosa!";
+                    IzposojaObvestilo.Text = "No entry!";
             }
             else
-                IzposojaObvestilo.Text = "Napačni podatki!";
+                IzposojaObvestilo.Text = "Wrong data!";
 
         }
 
 
-        void vrniKnjigo()
+        void vrniKnjigo() //return book
         {
             try
             {
@@ -84,19 +84,19 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("Delete from EvidencaPosoje WHERE KnjigaID='" + txtKnjigaID.Text + "' AND UporIme='" + txtUporIme.Text + "'", con);
-                int result = cmd.ExecuteNonQuery(); //shrani rezultat pobrisanih vrstic
+                SqlCommand cmd = new SqlCommand("Delete from Checkout WHERE BookID='" + txtKnjigaID.Text + "' AND Username='" + txtUporIme.Text + "'", con);
+                int result = cmd.ExecuteNonQuery(); //save result of deleted rows 
 
                 if (result > 0)
                 {
-                    IzposojaObvestilo.Text = "Knjiga vrnjena!";
+                    IzposojaObvestilo.Text = "Book returned!";
 
-                    GridViewIzposojeneKnjige.DataBind();
+                    GridViewBorrowedBooks.DataBind();
                     con.Close();
                 }
                 else
                 {
-                    IzposojaObvestilo.Text = "Napaka!";
+                    IzposojaObvestilo.Text = "Error!";
                 }
 
             }
@@ -106,7 +106,7 @@ namespace Izposoja
             }
         }
 
-        void izdajaKnjige()
+        void izdajaKnjige()   // borrow book
         {
             try
             {
@@ -117,16 +117,16 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO EvidencaPosoje (UporIme,Ime,Priimek,KnjigaID,Naslov,DatumIzposoje) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO Checkout (Username,Name,Surname,BookID,Title,DateofCheckout) " +
                     "VALUES ('"+ txtUporIme.Text + "', '"+ txtIme.Text+"', '" + txtPriimek.Text+"', '"+ txtKnjigaID.Text+"', '"+ txtNaslov.Text+"', '" + txtDatumPosoje.Text+"')", con);
 
                 cmd.ExecuteNonQuery();
                 con.Close();
 
                 IzposojaObvestilo.ForeColor = System.Drawing.Color.Green;
-                IzposojaObvestilo.Text = "Knjiga izposojena!";
+                IzposojaObvestilo.Text = "Book borrowed!";
 
-                GridViewIzposojeneKnjige.DataBind();
+                GridViewBorrowedBooks.DataBind();
             }
             catch (Exception ex)
             {
@@ -134,7 +134,7 @@ namespace Izposoja
             }
         }
 
-        bool knjigaObstaja()
+        bool knjigaObstaja()   //book exists
         {
             try
             {
@@ -144,7 +144,7 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("select * from Knjige where KnjigaID='" + txtKnjigaID.Text + "' ", con);
+                SqlCommand cmd = new SqlCommand("select * from Books where BookID='" + txtKnjigaID.Text + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -165,7 +165,7 @@ namespace Izposoja
         }
 
 
-        bool ClanObstaja()
+        bool ClanObstaja()  // user exists
         {
             try
             {
@@ -175,8 +175,8 @@ namespace Izposoja
                     con.Open();
                 }
 
-                /// - za Ime
-                SqlCommand cmd = new SqlCommand("select Ime, Priimek from Uporabniki where UporIme='" + txtUporIme.Text + "' ", con);
+                /// - for Name
+                SqlCommand cmd = new SqlCommand("select Name, Surname from Users where Username='" + txtUporIme.Text + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -196,7 +196,7 @@ namespace Izposoja
             }
         }
 
-        bool izposojaObstaja()
+        bool izposojaObstaja()  //checkout exists
         {
             try
             {
@@ -206,7 +206,7 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("select * from EvidencaPosoje where UporIme='" + txtUporIme.Text + "' and KnjigaID='"+txtKnjigaID.Text+"'", con);
+                SqlCommand cmd = new SqlCommand("select * from Checkout where Username='" + txtUporIme.Text + "' and BookID='"+txtKnjigaID.Text+"'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -227,7 +227,7 @@ namespace Izposoja
         }
 
 
-        void pridobiPodatke()
+        void pridobiPodatke() // get data
         {
             try
             {
@@ -237,42 +237,43 @@ namespace Izposoja
                     con.Open();
                 }
 
-                // - za Naslov preko IDKnjige
-                SqlCommand cmd = new SqlCommand("select Naslov from Knjige where KnjigaID='" + txtKnjigaID.Text + "' ", con);
+                // - for Title through BookID 
+                SqlCommand cmd = new SqlCommand("select Title from Books where BookID='" + txtKnjigaID.Text + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                if (dt.Rows.Count >=1) // če je pravi ID
+                if (dt.Rows.Count >=1) // if ID matches
                 {
-                    txtNaslov.Text = dt.Rows[0]["Naslov"].ToString(); //0-ta vrstica, stolpec Naslov
+                    txtNaslov.Text = dt.Rows[0]["Title"].ToString(); //0-row, column Title
                 }
                 else
                 {
-                    IzposojaObvestilo.Text = "Napačen ID kjige!";
+                    IzposojaObvestilo.Text = "Wrong or missing book ID!";
                 }
 
 
-                // - za Ime
-                cmd = new SqlCommand("select Ime, Priimek from Uporabniki where UporIme='" + txtUporIme.Text + "' ", con);
+                // - for Name
+                cmd = new SqlCommand("select Name, Surname from Users where Username='" + txtUporIme.Text + "' ", con);
                 da = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 da.Fill(dt);
 
-                if (dt.Rows.Count >= 1) // če je pravi ID
+                if (dt.Rows.Count >= 1) // if ID matches
                 {
-                    txtIme.Text = dt.Rows[0]["Ime"].ToString(); //0-ta vrstica, stolpec Ime
-                    txtPriimek.Text = dt.Rows[0]["Priimek"].ToString(); //0-ta vrstica, stolpec Ime
+                    txtIme.Text = dt.Rows[0]["Name"].ToString(); //0-row, column Name
+                    txtPriimek.Text = dt.Rows[0]["Surname"].ToString(); //0-row, column Surname
                 }
                 else
                 {
-                    IzposojaObvestilo.Text = "Napačno uporabniško ime!";
+                    IzposojaObvestilo.Text = "Wrong or missing username!";
                 }
             }
             catch (Exception ex)
             {
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
+            
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Moj profil" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Mojprofil.aspx.cs" Inherits="Izposoja.Mojprofil" %>
+﻿<%@ Page Title="My profile" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Mojprofil.aspx.cs" Inherits="Izposoja.Mojprofil" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <script type="text/javascript">
        $(document).ready(function () {
@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <%-- leva polovica --%>
+            <%-- left half --%>
             <div class="col-md-5 ">
                 <div class="card">
                     <div class="card-body">
@@ -28,7 +28,7 @@
                             <div class="col">
                                 <center>
                                     <h2 id="title"><%: Title %></h2>
-                                    <label>Tukaj lahko spremeniš podatke ali geslo.</label>
+                                    <label>Here you can change your data or password.</label>
                                 </center>
                             </div>
                         </div>
@@ -42,23 +42,23 @@
                             <asp:Label ID="spremembaObvestilo" runat="server" Font-Size="Medium" ForeColor="Green"></asp:Label> 
                         </div>
                             <div class="col">
-                                <label>Uporabniško ime:</label> 
+                                <label>Username:</label> 
                                      <div class="form-group">
-                                        <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Uporabniško ime"></asp:TextBox>
+                                        <asp:TextBox ID="txtUpIme" runat="server" CssClass="form-control txtbox" placeholder="Username"></asp:TextBox>
                                      </div>
 
-                                <label>Ime:</label> <br />
+                                <label>Name:</label> <br />
                                     <div class="form-group">
-                                        <asp:TextBox ID="txtIme" runat="server" CssClass="form-control txtbox" placeholder="Ime"></asp:TextBox>
+                                        <asp:TextBox ID="txtIme" runat="server" CssClass="form-control txtbox" placeholder=Name></asp:TextBox>
                                     </div>
 
-                                <label>Priimek:</label>
+                                <label>Surname:</label>
                                     <div class="form-group">
-                                        <asp:TextBox ID="txtPriimek" runat="server" CssClass="form-control txtbox" placeholder="Priimek"></asp:TextBox>
+                                        <asp:TextBox ID="txtPriimek" runat="server" CssClass="form-control txtbox" placeholder="Surname"></asp:TextBox>
 
-                                <label>Elektronski naslov:</label>
+                                <label>E-mail adress:</label>
                                     <div class="form-group">
-                                        <asp:TextBox ID="txtEnaslov" runat="server" CssClass="form-control txtbox" placeholder="Elektronski naslov"></asp:TextBox>
+                                        <asp:TextBox ID="txtEnaslov" runat="server" CssClass="form-control txtbox" placeholder="E-mail"></asp:TextBox>
                                     </div>
 
                             </div>
@@ -66,21 +66,21 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Uporabniško ime </label>
+                                <label>Username </label>
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtUpIme2" runat="server" CssClass="form-control txtbox" placeholder="Uporabniško ime" ReadOnly="true" Enabled="false" ></asp:TextBox>
+                                    <asp:TextBox ID="txtUpIme2" runat="server" CssClass="form-control txtbox" placeholder="Username" ReadOnly="true" Enabled="false" ></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Staro geslo </label>
+                                <label>Old password </label>
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtStaroGeslo" runat="server" CssClass="form-control txtbox" placeholder="Staro geslo" TextMode="Password" ></asp:TextBox>
+                                    <asp:TextBox ID="txtStaroGeslo" runat="server" CssClass="form-control txtbox" placeholder="Old password" TextMode="Password" ></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Novo geslo </label>
+                                <label>New password </label>
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtNovoGeslo" runat="server" CssClass="form-control txtbox" placeholder="Novo geslo" TextMode="Password"></asp:TextBox>
+                                    <asp:TextBox ID="txtNovoGeslo" runat="server" CssClass="form-control txtbox" placeholder="New password" TextMode="Password"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         <div class="row">
                             <div class="col-8 mx-auto"><center>
                                 <div class="form-group">
-                                    <asp:Button ID="btnSpremeni" runat="server" cssClass="btn-urejanje" width="250px" Text="Spremeni podatke" OnClick="btnSpremeni_Click"/></center>
+                                    <asp:Button ID="btnSpremeni" runat="server" cssClass="btn-urejanje" width="250px" Text="Change data" OnClick="btnSpremeni_Click"/></center>
                                 </div>
                             </div>
                        </div>
@@ -97,7 +97,7 @@
             </div>
             </div>
 
-            <%-- desna polovica --%>
+            <%-- right half --%>
             <div class="col-md-7">
                 <div class="card">
                     <div class="card-body">
@@ -113,8 +113,8 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h2>Moje izposojene knjige</h2>
-                                    <label>Pregled knjig, ki so trenutno pri tebi.</label>
+                                    <h2>My borrowed books</h2>
+                                    <label>Borrwed books you currently own.</label>
                                 </center>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                         <%-- gridview --%>
                         <div class="row">
                             <div class="col-md">
-                                <asp:GridView class="table table-bordered" ID="GridViewMojeIzposojene" runat="server"></asp:GridView>
+                                <asp:GridView class="table table-bordered" ID="GridViewMyBorrowed" runat="server"></asp:GridView>
                             </div>
                         </div>
 

@@ -10,7 +10,7 @@ using System.Data;
 
 namespace Izposoja
 {
-    public partial class Mojprofil : System.Web.UI.Page
+    public partial class Mojprofil : System.Web.UI.Page           // My profile page
     {
         string strdbcon = ConfigurationManager.ConnectionStrings["dbcon"].ConnectionString;
 
@@ -20,7 +20,7 @@ namespace Izposoja
             {
                 if (Session["username"] == null || string.IsNullOrEmpty(Session["username"].ToString()))
                 {
-                    spremembaObvestilo.Text = "Prijava potekla, prijavi se ponovno.";
+                    spremembaObvestilo.Text = "Session expired, please login again.";
                     Response.Redirect("Prijava.aspx");
                 }
                 else
@@ -47,12 +47,12 @@ namespace Izposoja
             {
                 if (Session["username"] == null || string.IsNullOrEmpty(Session["username"].ToString()))
                 {
-                    spremembaObvestilo.Text = "Prijava potekla, prijavi se ponovno.";
+                    spremembaObvestilo.Text = "Session expired, please login again.";
                     Response.Redirect("Prijava.aspx");
                 }
                 else
                 {
-                    SpremeniPodatkeProfila();
+                    SpremeniPodatkeProfila();  //change profile data
                 }
 
             }
@@ -64,17 +64,17 @@ namespace Izposoja
         }
 
 
-        void SpremeniPodatkeProfila()
+        void SpremeniPodatkeProfila() //change profile data
         {
-            string geslo = string.Empty;
+            string password = string.Empty;
 
-            if (txtNovoGeslo.Text.Trim() == "")  //če je polje za novo geslo prazno, gesla ne želim spreminjati
+            if (txtNovoGeslo.Text.Trim() == "")  //if field for noew password is empty, I don't want to change password
             {
-                geslo = txtStaroGeslo.Text;
+                password = txtStaroGeslo.Text;
             }
             else
             {
-                geslo = txtNovoGeslo.Text.Trim();
+                password = txtNovoGeslo.Text.Trim();
             }
 
 
@@ -88,21 +88,21 @@ namespace Izposoja
                 }
 
 
-                SqlCommand cmd = new SqlCommand("update Uporabniki set UporIme='" +txtUpIme.Text+ "',Ime='" +txtIme.Text+ "',Priimek='" +txtPriimek.Text+ "',eNaslov='" +txtEnaslov.Text+ "',Geslo='" +geslo+ "' WHERE UporIme='" + Session["username"].ToString()+ "'  ", con);
-                //SqlCommand cmd = new SqlCommand("update Uporabniki set UporIme=@UporIme,Ime=@Ime,Priimek=@Priimek,eNaslov=@eNaslov,Geslo=@Geslo WHERE UporIme='" + Session["username"].ToString()+ "'  ", con);
+                SqlCommand cmd = new SqlCommand("update Users set Username='" +txtUpIme.Text+ "',Name='" +txtIme.Text+ "',Surname='" +txtPriimek.Text+ "',email='" +txtEnaslov.Text+ "',Password='" +password+ "' WHERE Username='" + Session["username"].ToString()+ "'  ", con);
+                //SqlCommand cmd = new SqlCommand("update Users set Username=@Username,Name=@Name,Surname=@Surname,email=@email,Password=@Password WHERE Username='" + Session["username"].ToString()+ "'  ", con);
 
-                int rezultat = cmd.ExecuteNonQuery(); //vrača effected rows in shrano v rezultat
+                int rezultat = cmd.ExecuteNonQuery(); //returns effected rows and saves them in result 
                 con.Close();
 
-                if (rezultat > 0) //če vpliva na vsaj 1 vrstico
+                if (rezultat > 0) //if effects at least 1 row
                 {
-                    spremembaObvestilo.Text = "Podatki uspešno spremenjeni!";
-                    PoodatkiOprofilu();
-                    MojeIzposojeneKnjige();
+                    spremembaObvestilo.Text = "Data successfully changed!";
+                    PoodatkiOprofilu();  //Profile data
+                    MojeIzposojeneKnjige(); // My borrowed books
                 }
                 else
                 {
-                    spremembaObvestilo.Text = "Napačen vnos!";
+                    spremembaObvestilo.Text = "Wrong entry!";
                 }
             }
             catch (Exception ex)
@@ -113,7 +113,7 @@ namespace Izposoja
 
 
 
-        void PoodatkiOprofilu()
+        void PoodatkiOprofilu()  //Profile data
         {
             try
             {
@@ -123,16 +123,16 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("select * from Uporabniki where UporIme='" + Session["username"].ToString() + "' ", con);
+                SqlCommand cmd = new SqlCommand("select * from Users where Username='" + Session["username"].ToString() + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                txtUpIme.Text = dt.Rows[0]["UporIme"].ToString();
-                txtIme.Text = dt.Rows[0]["Ime"].ToString();
-                txtPriimek.Text = dt.Rows[0]["Priimek"].ToString();
-                txtEnaslov.Text = dt.Rows[0]["eNaslov"].ToString();
-                txtUpIme2.Text = dt.Rows[0]["UporIme"].ToString();
+                txtUpIme.Text = dt.Rows[0]["Username"].ToString();
+                txtIme.Text = dt.Rows[0]["Name"].ToString();
+                txtPriimek.Text = dt.Rows[0]["Surname"].ToString();
+                txtEnaslov.Text = dt.Rows[0]["email"].ToString();
+                txtUpIme2.Text = dt.Rows[0]["Username"].ToString();
 
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace Izposoja
 
         }
 
-        void MojeIzposojeneKnjige()
+        void MojeIzposojeneKnjige() // My borrowed books
         {
             try
             {
@@ -152,13 +152,13 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("select * from EvidencaPosoje where UporIme='" + Session["username"].ToString() + "' ", con);
+                SqlCommand cmd = new SqlCommand("select * from Checkout where Username='" + Session["username"].ToString() + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-                GridViewMojeIzposojene.DataSource = dt;
-                GridViewMojeIzposojene.DataBind();
+                GridViewMyBorrowed.DataSource = dt;
+                GridViewMyBorrowed.DataBind();
 
             }
             catch (Exception ex)
