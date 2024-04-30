@@ -78,7 +78,7 @@
                             </div>
                         </div>
                          <div class="col-md-6">
-                           <label>Surnam</label>
+                           <label>Surname</label>
                             <div class="form-group">
                                <asp:TextBox CssClass="form-control txtbox" ID="txtPriimek" runat="server" placeholder="Surname" ></asp:TextBox>
                             </div>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                           <div class="col-md-6">
-                             <br /> <asp:Button ID="btnIzposodi" runat="server" Text="Izposodi" OnClick="btnIzposodi_Click" CssClass="btn-urejanje" width="110px"/>
+                             <br /> <asp:Button ID="btnIzposodi" runat="server" Text="Checkout" OnClick="btnIzposodi_Click" CssClass="btn-urejanje" width="110px"/>
                         </div>
                     </div>
 

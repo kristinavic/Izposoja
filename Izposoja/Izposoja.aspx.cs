@@ -117,7 +117,7 @@ namespace Izposoja
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Checkout (Username,Name,Surname,BookID,Title,DateofCheckout) " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO Checkout (Username,Name,Surname,BookID,Title,Checkout) " +
                     "VALUES ('"+ txtUporIme.Text + "', '"+ txtIme.Text+"', '" + txtPriimek.Text+"', '"+ txtKnjigaID.Text+"', '"+ txtNaslov.Text+"', '" + txtDatumPosoje.Text+"')", con);
 
                 cmd.ExecuteNonQuery();
