@@ -29,8 +29,17 @@ It is also one of the first versions of application, where I just now see what n
   - In Server Explorer add new connection, for Data Source choose Microsoft SQL Server Database File (SqlClient) and for data provider chose Microsof SqlClient Data Provider.
   - Browse files to find location of saved database and chose it.
   - Once you're connected to the database, open it's properties. In property Connection string copy whole line (Data Source=...)
-6. In Solution Explorer open file Web.config, go to <connectionStrings> section, where all the properties about connection to database are. Replace existing Data source with the one you copied.
-7. Installation of solution is now complete, all you need is to deploy it and share to friends.
+4. In Solution Explorer open file Web.config, go to <connectionStrings> section, where all the properties about connection to database are.
+    
+``` r
+<connectionStrings>
+  <add name="dbcon" connectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Git\The-book-borrower\Library.mdf;Integrated Security=True;Connect Timeout=30"
+  providerName="Microsoft.Data.SqlClient" />
+</connectionStrings>
+``` 
+
+5. Replace existing Data source with the one you copied.
+6. Installation of solution is now complete, all you need is to deploy it and share to friends.
 
 ## How to use it
 
@@ -41,3 +50,22 @@ On the Borrow page, user can digitally borrow the book. By selecting username of
 On My profile page user can edit his own data and see his books that are currently borrowed and by whom. 
 
 Administrator is the one who can add, change or delete books from database and he can also add or delete users. 
+
+## Login credentials
+
+__Admin credentials__:
+
+- user: `admin`
+- password: `admin`
+
+__Users credentials__:
+
+- user: `coconut`
+- password: `cococatherine`  
+>
+- user: `thebuilder`
+- password: `letsbuild0`
+>
+- user: `king`
+- password: `longlivetheking1`
+>
